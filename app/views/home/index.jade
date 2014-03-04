@@ -1,0 +1,52 @@
+doctype html
+//[if IE 9]><html class="lt-ie10" lang="en" > <![endif]
+html(class='no-js', lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title= title
+    link(rel='stylesheet', href='/css/normalize.css')
+    //link(rel='stylesheet', href='/css/foundation.css')
+    link(rel='stylesheet', href='/less/app.css')
+    script(src='/js/vendor/modernizr.js')
+  body
+    .row
+      .small-12.columns
+        h1 Node Tunes
+    .row
+      .small-6.columns.interface-panel
+        button.tiny.radius#new-album New-Album
+      .small-6.columns.player-panel
+        audio#audio-tag(src='audios/intro.mp3', autoplay=false)
+        .panel-display
+          #time-elapsed.panel-lcd 00:00
+          #time-total.panel-lcd 00:00
+        .panel-controls
+          #play-pause.panel-button.play Play
+          #stop.panel-button.stop Stop
+          #time-display
+            #time-bar.time-graphics
+            #time-progress.time-graphics
+        .panel-options
+          select#playback-style
+            option(value='') Playback
+            option(value='single-song') Single Song
+            option(value='loop-song') Loop Song
+            option(value='continous') Continous
+      .float-clear
+    .row
+      .small-12.columns
+          table#song-table
+            thead
+              th Artist
+              th Track
+              th Title
+              th Album
+              th
+            tbody
+
+    script(src='/js/vendor/jquery.js')
+    script(src='/js/vendor/lodash.js')
+    script(src='/js/vendor/moment.js')
+    script(src='/js/source/main.js')
+

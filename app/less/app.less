@@ -1,0 +1,186 @@
+@bg-color: #a3a3a3;
+
+@font-face {
+  font-family: varela;
+  src: url(/css/VarelaRound-Regular.ttf);
+}
+
+@font-face {
+  font-family: lilita;
+  src: url(/css/LilitaOne-Regular.ttf);
+}
+
+body{
+  background-color: @bg-color;
+}
+
+// These next entries are replacing the foundation defaults. That way, you can remove the template without
+// having to change your jade files at all (hopefully...).
+
+.row {
+  margin: 0px auto;
+  width: 1100px;
+  //text-align: center;
+  border: 1px dotted black;
+}
+
+
+.small-12 {
+  width: 100%;
+  border: 1px dotted black;
+}
+
+.small-6 {
+  margin: 0px auto;
+  width: 40%;
+  border: 1px dotted black;
+}
+
+.columns {
+  margin: 0px auto;
+  display: inline-block;
+  border: 1px dotted black;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+h1 {
+  font-family: lilita;
+  text-align: center;
+  font-size: 50px;
+}
+
+button {
+  background-color: #33c333;
+  font-family: varela;
+  box-shadow: 2px 2px 5px #000000;
+  border: 1px solid rgba(0, 0, 0, .3);
+  border-radius: 6px;
+}
+
+button:focus{
+  outline: 0;
+}
+
+.float-clear {
+  clear: both;
+}
+
+.interface-panel {
+}
+
+.player-panel {
+  //text-align: left;
+  border: 1px solid black;
+  margin: 0px 0px 0px auto;
+  float: right;
+}
+
+.panel-controls {
+  display: inline;
+}
+
+.panel-button {
+  margin: 0px auto 0px 0px;
+  border: 1px solid black;
+  display: inline;
+}
+
+.panel-options {
+  display: inline-block;
+  //border: 2px dotted yellow;
+  float: right;
+}
+
+#time-display {
+  //border: 2px solid black;
+  width: 200px;
+  height: 20px;
+  padding: 0px;
+  margin: 0px 10px;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+
+.time-graphics {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  overflow: hidden;
+  //border: 1px dotted black;
+  //border-radius: 50%;
+}
+
+#time-bar {
+  //background-color: black;
+  background-image: url('/img/time-bar.png');
+  z-index: 0;
+}
+
+#time-back {
+  //width: 100%;
+  //height: 100%;
+}
+
+#time-progress {
+  //background-color: rgba(0, 0, 0, 0);
+  background-image: url('/img/time-progress.png');
+  clip: rect(0px, 0px, 0px, 0px);
+  z-index: 1;
+}
+
+#time-front {
+  //width: 100%;
+  //height: 100%;
+}
+
+#playback-style {
+  display: inline;
+  width: 100px;
+  height: 20px;
+  font-size: 12px;
+  margin: 0px 0px 0px auto;
+}
+
+.panel-display {
+  display: block;
+}
+
+.panel-lcd {
+  display: inline-block;
+  margin: 10px;
+}
+
+#song-table{
+  width: 900px;
+  font-family: lilita;
+  font-size: 20px;
+}
+
+thead{
+ text-align: center;
+}
+
+th{
+  margin: 0px auto;
+}
+
+.highlighted{
+  background-color: rgba(0, 0, 0, .5);
+  color: white;
+}
+
+td:nth-last-child(1){
+  text-align: right;
+}
