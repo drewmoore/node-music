@@ -3,10 +3,17 @@
 var Album = require('../models/album');
 var moment = require('moment');
 
-exports.index = function(req, res){
+exports.all = function(req, res){
   Album.findAll(function(albums){
     res.send({moment:moment, albums:albums});
     //res.render('albums/index', {moment:moment, albums:albums, title: 'Node-Audio Music Albums'});
+  });
+};
+
+exports.index = function(req, res){
+  Album.findAll(function(albums){
+    //res.send({moment:moment, albums:albums});
+    res.render('albums/index', {moment:moment, albums:albums, title: 'Node-Audio Music Albums'});
   });
 };
 
@@ -24,7 +31,7 @@ exports.create = function(req, res){
   var album = new Album(req.body);
   album.addCover(req.files.cover.path);
   album.insert(function(){
-    res.redirect('/');
+    res.redirect('/albums');
   });
 };
 

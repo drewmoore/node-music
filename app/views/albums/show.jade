@@ -15,7 +15,7 @@ html(class='no-js', lang='en')
         h1= title + ' : ' + moment(album.releaseyear).format('MMMM Do, YYYY')
     .row
       .small-12.columns
-        a.button.tiny.radius(href='/') Home Page
+        a.button.tiny.radius(href='/albums') Back To Albums
     .row
       .small-4.columns
         form(action='/albums/' + album._id, method='post', enctype='multipart/form-data')

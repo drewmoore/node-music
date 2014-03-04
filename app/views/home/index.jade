@@ -15,9 +15,9 @@ html(class='no-js', lang='en')
         h1 Node Tunes
     .row
       .small-6.columns.interface-panel
-        button.tiny.radius#new-album New-Album
+        button.tiny.radius#edit-albums Edit Albums
+        button.tiny.radius#new-album New Album
       .small-6.columns.player-panel
-        audio#audio-tag(src='audios/intro.mp3', autoplay=false)
         .panel-display
           #time-elapsed.panel-lcd 00:00
           #time-total.panel-lcd 00:00
@@ -35,15 +35,15 @@ html(class='no-js', lang='en')
             option(value='continous') Continous
       .float-clear
     .row
-      .small-12.columns
-          table#song-table
-            thead
-              th Artist
-              th Track
-              th Title
-              th Album
-              th
-            tbody
+      #table-container.small-12.columns
+        table#song-table
+          thead
+            th.artist-column Artist
+            th.track-column Track
+            th.title-column Title
+            th.album-column Album
+            th.cover-column
+          tbody#song-list
 
     script(src='/js/vendor/jquery.js')
     script(src='/js/vendor/lodash.js')

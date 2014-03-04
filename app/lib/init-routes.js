@@ -17,7 +17,8 @@ function load(app, fn){
   var albums = require('../routes/albums');
 
   app.get('/', d, home.index);
-  app.get('/albums/all', d, albums.index);
+  app.get('/albums', d, albums.index);
+  app.get('/albums/all', d, albums.all);
   app.get('/albums/new', d, albums.new);
   app.get('/albums/:id', d, albums.show);
   app.post('/albums', d, albums.create);

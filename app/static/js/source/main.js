@@ -2,6 +2,7 @@
 
   'use strict';
 
+  var albumsOnPage = [];
   var songSelected = $('#audio-tag')[0];
   var timer;
   var songProgressTimer;
@@ -11,6 +12,8 @@
   function initialize(){
 
     getMusic();
+
+    $('#edit-albums').click(editAlbums);
     $('#new-album').click(newAlbum);
     $('.play').on('click', play);
     $('.pause').click(pause);
@@ -24,16 +27,138 @@
   function getMusic(){
     var url = 'albums/all';
     $.getJSON(url, receiveMusic);
-    console.log('getMusic called: ');
+    //console.log('getMusic called: ', url);
   }
 
   function receiveMusic(data){
-    console.log('receiveMusic called: ', data);
+    albumsOnPage = data.albums;
+    sortArtist();
+    //console.log('receiveMusic called: ', data, albumsOnPage);
+  }
+
+  function sortArtist(){
+    var songs = [];
+    //_.each(_.sortBy(albumsOnPage, 'artist'), function(album){_.each(album.songs, function(song){_.sortBy(album.songs, song.songtags.v1.track);});});
+    _.each(_.sortBy(albumsOnPage, 'artist'), function(album){
+      _.each(album.songs, function(song){
+        songs.push(song);
+      });
+    });
+
+    fillTable(songs);
+    //console.log('sortArtist called: ', songs);
+  }
+
+  function fillTable(songs){
+
+    _.each(songs, function(song){
+      if(!(!song.songfile)){
+        var $tr = $('<tr>');
+        var $th = $('#song-table > thead > tr > th');
+        var $audio = $('<audio>');
+        var $songList = $('#song-list');
+        var backgroundUrl = 'url("' + findBackground(song) + '")';
+
+        _.each($th, function(th){
+          var $td = $('<td>');
+          var $div = $('<div>');
+          var trackNum = (song.songtags.v1.track || '');
+          switch($(th).attr('class'))
+          {
+          case 'artist-column':
+            $td.text(song.artist);
+            break;
+          case 'track-column':
+            $td.text(trackNum);
+            break;
+          case 'title-column':
+            $td.text(song.title);
+            break;
+          case 'album-column':
+            $td.text(song.songtags.album || '');
+            break;
+          case 'cover-column':
+            $div.css('background-image', backgroundUrl);
+            $div.addClass('hide');
+            $td.append($div);
+            break;
+
+          }
+          $tr.append($td);
+          //console.log('each th: ', $td, backgroundUrl);
+        });
+
+        $audio.attr('src', song.songfile);
+        $tr.append($audio);
+        $songList.append($tr);
+        //console.log('each song: ', song, $tr, $th, $audio, $songList);
+      }
+      $('#song-list > tr').on('mouseover', mouseOver);
+      $('#song-list > tr').on('mouseout', mouseOut);
+      $('#song-list > tr').on('mousedown', mouseDown);
+      $('#song-list > tr').on('mouseup', mouseUp);
+      $('#song-list > tr').on('click', songClick);
+    });
+    //console.log('fillTable called: ', songs);
+  }
+
+  function mouseOver(){
+    var $targetDiv = $(this).find('td > div');
+    $targetDiv.removeClass('hide');
+    $targetDiv.addClass('image-pop');
+    $(this).addClass('highlighted');
+    //console.log('mouseOver called: ', this, $targetDiv);
+  }
+
+  function mouseOut(){
+    var $targetDiv = $(this).find('td > div');
+    $targetDiv.removeClass('image-pop');
+    $targetDiv.addClass('hide');
+    $(this).removeClass('highlighted');
+    //console.log('mouseOut called: ');
+  }
+
+  function mouseDown(){
+    //$(this).removeClass('highlighted');
+    $(this).addClass('getting-clicked');
+    console.log('mouseDown called: ');
+  }
+
+  function mouseUp(){
+    $(this).removeClass('getting-clicked');
+    //$(this).addClass('highlighted');
+    console.log('mouseUp called: ');
+  }
+
+  function songClick(event){
+    var newAudio = $(this).find('audio')[0];
+
+    songSelected = newAudio;
+    event.preventDefault();
+    //console.log('songClick called: ', this, newAudio);
+  }
+
+  function findBackground(song){
+    var background;
+    _.each(albumsOnPage, function(album){
+      _.each(album.songs, function(albumSong){
+        if(albumSong.songfile === song.songfile){
+          background = album.cover;
+        }
+      });
+    });
+    //console.log('findBackground called: ', song, background);
+    return background;
+  }
+
+  function editAlbums(){
+    var url = '/albums';
+    window.open(url);
+    //console.log('editAlbums called: ');
   }
 
   function newAlbum(){
     var url = '/albums/new';
-
     window.open(url);
     //console.log('newAlbum called: ');
   }
@@ -95,18 +220,27 @@
   function timerFunction(){
     var playbackStyle = $('#playback-style').val();
 
+    $('#time-elapsed').text(getTimeElapsed(songSelected));
     if(songSelected.ended){
       if(playbackStyle === 'loop-song'){
         //stop();
         play();
         console.log('loop the song');
-      } else {
+      }
+      if(playbackStyle === 'single-song'){
         stop(songSelected);
       }
-      console.log('song ended');
+      if(playbackStyle === 'continous'){
+        findNextSong();
+        play();
+      }
+      //console.log('song ended');
     }
-    $('#time-elapsed').text(getTimeElapsed(songSelected));
+  }
 
+  function findNextSong(){
+    var thisIndex = $('audio').index(songSelected);
+    songSelected = $('audio')[thisIndex + 1];
   }
 
   function timeProgressAnimation(){
