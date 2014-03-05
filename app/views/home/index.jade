@@ -14,10 +14,11 @@ html(class='no-js', lang='en')
       .small-12.columns
         h1 Node Tunes
     .row
-      .small-6.columns.interface-panel
+      .small-6.columns.panel.interface-panel
         button.tiny.radius#edit-albums Edit Albums
         button.tiny.radius#new-album New Album
-      .small-6.columns.player-panel
+      .small-6.columns.panel.player-panel
+        audio#audio-tag(src='audios/intro.mp3', autoplay=false)
         .panel-display
           #time-elapsed.panel-lcd 00:00
           #time-total.panel-lcd 00:00
